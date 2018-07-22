@@ -155,7 +155,6 @@ const uint16_t PROGMEM fn_actions[] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-  update_tri_layer(LR_LWR, LR_RSE, LR_NAV);
   if (record->event.pressed) {
     switch (keycode) {
       case MC_0P0:
@@ -182,6 +181,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
   }
   return true;
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  return update_tri_layer_state(state, LR_LWR, LR_RSE, LR_NAV);
 }
 
 void matrix_init_user(void)
