@@ -9,15 +9,20 @@
 #define _______ KC_TRNS
 
 enum tprk77_layers {
-  LR_CLMK = 0,  /* COLEMAK (BASE) */
-  LR_LWR  = 1,  /* LOWER */
-  LR_RSE  = 2,  /* RAISE */
-  LR_NAV  = 3   /* NAV */
+  LR_QWTY = 0,  /* QWERTY (BASE) */
+  LR_CLMK = 1,  /* COLEMAK (BASE) */
+  LR_LWR  = 2,  /* LOWER */
+  LR_RSE  = 3,  /* RAISE */
+  LR_NAV  = 4,  /* NAV */
+  LR_FNS  = 5   /* FN SHIFT */
 };
 
 enum tprk77_fns {
   MO_LWR  = KC_FN0,
-  MO_RSE  = KC_FN1
+  MO_RSE  = KC_FN1,
+  MO_FNS  = KC_FN2,
+  DL_CLMK = KC_FN3,
+  DL_QWTY = KC_FN4
 };
 
 enum tprk77_mod_keys {
@@ -57,26 +62,49 @@ enum tprk77_keys {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
-   * COLEMAK (BASE) LAYER:
+   * QWERTY (BASE) LAYER:
    *
    * ,-----------------------------------------------------------------------------------.
-   * |  `   |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  =   |
+   * | Esc  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
    * |------+------+------+------+------+-------------+------+------+------+------+------|
-   * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
+   * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  '   |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * | Ctrl |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  "   |
+   * | Ctrl |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
    * |------+------+------+------+------+------|------+------+------+------+------+------|
-   * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Enter |
+   * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift |
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * | Esc  | Nav  | GUI  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+   * | Ctrl | XXXX |  Fn  | Alt  |Space |    Space    | Clmk | Left | Down |  Up  |Right |
+   * `-----------------------------------------------------------------------------------'
+   */
+  [LR_QWTY] = KEYMAP_MIT(
+      KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0   , KC_BSPC,
+      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_QUOT,
+      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+      KC_LCTL, XXXXXXX, MO_FNS,  KC_LALT, KC_SPC,      KC_SPC,       DL_CLMK, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  ),
+
+  /*
+   * COLEMAK LAYER:
+   *
+   * ,-----------------------------------------------------------------------------------.
+   * | Esc  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+   * |------+------+------+------+------+-------------+------+------+------+------+------|
+   * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  |  '   |
+   * |------+------+------+------+------+------|------+------+------+------+------+------|
+   * | Ctrl |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |Enter |
+   * |------+------+------+------+------+------|------+------+------+------+------+------|
+   * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Shift |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * | Ctrl | XXXX | GUI  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
    * `-----------------------------------------------------------------------------------'
    */
   [LR_CLMK] = KEYMAP_MIT(
-      KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0   , KC_EQL,
-      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-      KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-      KC_ESC,  XXXXXXX, KC_LGUI, KC_LALT, MO_LWR,      KC_SPC,       MO_RSE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+      KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0   , KC_BSPC,
+      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_QUOT,
+      KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_ENT,
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+      KC_LCTL, XXXXXXX, KC_LGUI, KC_LALT, MO_LWR,      KC_SPC,       MO_RSE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
   ),
 
   /*
@@ -137,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|------+------+------+------+------+------|
    * | Shift| C-/  | C-r  | C-s  | C-x b| C-x k| C-k  | XXXX | XXXX | XXXX | XXXX | Enter|
    * |------+------+------+------+------+------+------+------+------+------+------+------|
-   * | Esc  | Nav  | GUI  | Alt  | Lower|    Space    | Raise| Left | Down |  Up  | Right|
+   * | Esc  | Qwty | GUI  | Alt  | Lower|    Space    | Raise| Left | Down |  Up  | Right|
    * `-----------------------------------------------------------------------------------'
    */
   [LR_NAV] = KEYMAP_MIT(
@@ -145,13 +173,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  MD_CQUE, MD_MSO,  MD_MO,   MD_MX,   MD_CG,   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX, KC_BSPC,
       KC_LCTL, MD_CL,   MD_MW,   MD_CW,   MD_CY,   KC_DEL,  KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
       KC_LSFT, MD_CSLS, MD_CR,   MD_CS,   MC_CXB,  MC_CXK,  MD_CK,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ENT,
-      KC_ESC,  XXXXXXX, KC_LGUI, KC_LALT, MO_LWR,      KC_SPC,       MO_RSE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+      KC_ESC,  DL_QWTY, KC_LGUI, KC_LALT, MO_LWR,      KC_SPC,       MO_RSE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+  ),
+
+  /*
+   * FN SHIFT LAYER:
+   *
+   * ,-----------------------------------------------------------------------------------.
+   * | XXXX |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  | F10  | XXXX |
+   * |------+------+------+------+------+-------------+------+------+------+------+------|
+   * | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | F11  | F12  | XXXX |
+   * |------+------+------+------+------+-------------+------+------+------+------+------|
+   * | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
+   * |------+------+------+------+------+------|------+------+------+------+------+------|
+   * | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
+   * |------+------+------+------+------+------+------+------+------+------+------+------|
+   * | XXXX | XXXX |  Fn  | XXXX | XXXX |    XXXX     | XXXX | XXXX | XXXX | XXXX | XXXX |
+   * `-----------------------------------------------------------------------------------'
+   */
+  [LR_FNS] = KEYMAP_MIT(
+      XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_F11,  KC_F12,  XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, MO_FNS,  XXXXXXX, XXXXXXX,      XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   )
 };
 
 const uint16_t PROGMEM fn_actions[] = {
   /* MO_LWR */  [0] = ACTION_LAYER_MOMENTARY(LR_LWR),
-  /* MO_RSE */  [1] = ACTION_LAYER_MOMENTARY(LR_RSE)
+  /* MO_RSE */  [1] = ACTION_LAYER_MOMENTARY(LR_RSE),
+  /* MO_FNS */  [2] = ACTION_LAYER_MOMENTARY(LR_FNS),
+  /* DL_CLMK */ [3] = ACTION_DEFAULT_LAYER_SET(LR_CLMK),
+  /* DL_QWTY */ [4] = ACTION_DEFAULT_LAYER_SET(LR_QWTY)
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
